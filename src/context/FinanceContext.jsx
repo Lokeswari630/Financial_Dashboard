@@ -6,11 +6,29 @@ const STORAGE_KEY = 'finance_dashboard_data';
 const DARK_MODE_KEY = 'finance_dashboard_dark_mode';
 const ROLE_KEY = 'finance_dashboard_role';
 
+const toISODate = (year, monthIndex, day) => {
+  const month = String(monthIndex + 1).padStart(2, '0');
+  const date = String(day).padStart(2, '0');
+  return `${year}-${month}-${date}`;
+};
+
+const getRelativeDate = (monthsAgo, dayOfMonth) => {
+  const base = new Date();
+  base.setHours(0, 0, 0, 0);
+  base.setDate(1);
+  base.setMonth(base.getMonth() - monthsAgo);
+
+  const maxDay = new Date(base.getFullYear(), base.getMonth() + 1, 0).getDate();
+  const safeDay = Math.min(dayOfMonth, maxDay);
+
+  return toISODate(base.getFullYear(), base.getMonth(), safeDay);
+};
+
 // Default transactions data
 const defaultTransactions = [
   {
     id: '1',
-    date: '2024-03-25',
+    date: getRelativeDate(0, 25),
     amount: 5000,
     category: 'salary',
     type: 'income',
@@ -18,7 +36,7 @@ const defaultTransactions = [
   },
   {
     id: '2',
-    date: '2024-03-24',
+    date: getRelativeDate(0, 24),
     amount: 150,
     category: 'food',
     type: 'expense',
@@ -26,7 +44,7 @@ const defaultTransactions = [
   },
   {
     id: '3',
-    date: '2024-03-23',
+    date: getRelativeDate(0, 23),
     amount: 50,
     category: 'transport',
     type: 'expense',
@@ -34,7 +52,7 @@ const defaultTransactions = [
   },
   {
     id: '4',
-    date: '2024-03-22',
+    date: getRelativeDate(0, 22),
     amount: 1200,
     category: 'freelance',
     type: 'income',
@@ -42,7 +60,7 @@ const defaultTransactions = [
   },
   {
     id: '5',
-    date: '2024-03-20',
+    date: getRelativeDate(0, 20),
     amount: 80,
     category: 'entertainment',
     type: 'expense',
@@ -50,7 +68,7 @@ const defaultTransactions = [
   },
   {
     id: '6',
-    date: '2024-03-18',
+    date: getRelativeDate(0, 18),
     amount: 600,
     category: 'utilities',
     type: 'expense',
@@ -58,7 +76,7 @@ const defaultTransactions = [
   },
   {
     id: '7',
-    date: '2024-03-15',
+    date: getRelativeDate(0, 15),
     amount: 200,
     category: 'shopping',
     type: 'expense',
@@ -66,7 +84,7 @@ const defaultTransactions = [
   },
   {
     id: '8',
-    date: '2024-03-10',
+    date: getRelativeDate(0, 10),
     amount: 300,
     category: 'healthcare',
     type: 'expense',
@@ -74,7 +92,7 @@ const defaultTransactions = [
   },
   {
     id: '9',
-    date: '2024-02-28',
+    date: getRelativeDate(1, 28),
     amount: 5100,
     category: 'salary',
     type: 'income',
@@ -82,7 +100,7 @@ const defaultTransactions = [
   },
   {
     id: '10',
-    date: '2024-02-22',
+    date: getRelativeDate(1, 22),
     amount: 900,
     category: 'freelance',
     type: 'income',
@@ -90,7 +108,7 @@ const defaultTransactions = [
   },
   {
     id: '11',
-    date: '2024-02-18',
+    date: getRelativeDate(1, 18),
     amount: 420,
     category: 'utilities',
     type: 'expense',
@@ -98,7 +116,7 @@ const defaultTransactions = [
   },
   {
     id: '12',
-    date: '2024-02-12',
+    date: getRelativeDate(1, 12),
     amount: 260,
     category: 'food',
     type: 'expense',
@@ -106,7 +124,7 @@ const defaultTransactions = [
   },
   {
     id: '13',
-    date: '2024-01-29',
+    date: getRelativeDate(2, 29),
     amount: 5200,
     category: 'salary',
     type: 'income',
@@ -114,7 +132,7 @@ const defaultTransactions = [
   },
   {
     id: '14',
-    date: '2024-01-21',
+    date: getRelativeDate(2, 21),
     amount: 350,
     category: 'education',
     type: 'expense',
@@ -122,7 +140,7 @@ const defaultTransactions = [
   },
   {
     id: '15',
-    date: '2024-01-15',
+    date: getRelativeDate(2, 15),
     amount: 180,
     category: 'transport',
     type: 'expense',
@@ -146,6 +164,16 @@ export const FinanceProvider = ({ children }) => {
 
     try {
       const parsed = JSON.parse(stored);
+      const isLegacySeedData =
+        Array.isArray(parsed) &&
+        parsed.length === 15 &&
+        parsed.every((item) => Number.isInteger(Number(item.id)) && Number(item.id) >= 1 && Number(item.id) <= 15) &&
+        parsed.every((item) => String(item.date || '').startsWith('2024-'));
+
+      if (isLegacySeedData) {
+        return defaultTransactions;
+      }
+
       if (Array.isArray(parsed) && parsed.length < defaultTransactions.length) {
         return defaultTransactions;
       }

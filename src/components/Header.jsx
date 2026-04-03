@@ -31,6 +31,23 @@ export default function Header({
 
             {/* Controls */}
             <div className="flex items-center gap-1 sm:gap-4 flex-shrink-0">
+              {/* Mobile Role Selector */}
+              <div className="sm:hidden">
+                <label htmlFor="role-select-mobile" className="sr-only">
+                  Role
+                </label>
+                <select
+                  id="role-select-mobile"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="input-field w-[96px] py-1.5 text-xs cursor-pointer"
+                  aria-label="Select role"
+                >
+                  <option value="viewer">Viewer</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+
               {/* Role Selector - Hidden on very small screens */}
               <div className="hidden sm:flex items-center gap-2">
                 <label htmlFor="role-select" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
