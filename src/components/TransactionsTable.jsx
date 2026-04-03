@@ -231,9 +231,11 @@ export default function TransactionsTable() {
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <button
               onClick={() => setShowExportModal(true)}
+              type="button"
               className="btn-secondary flex items-center gap-2 whitespace-nowrap px-3 sm:px-4"
+              aria-label="Export transactions as CSV"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4" aria-hidden="true" focusable="false" />
               Export
             </button>
             {role === 'admin' && (
@@ -242,10 +244,12 @@ export default function TransactionsTable() {
                   setEditingId(null);
                   setShowForm(true);
                 }}
+                type="button"
                 disabled={showForm}
                 className="btn-primary flex items-center gap-2 whitespace-nowrap px-3 sm:px-4"
+                aria-label="Add transaction"
               >
-                <Plus className="w-5 h-5" />
+                <Plus className="w-5 h-5" aria-hidden="true" focusable="false" />
                 <span className="sm:hidden">Add</span>
                 <span className="hidden sm:inline">Add Transaction</span>
               </button>
@@ -292,12 +296,14 @@ export default function TransactionsTable() {
               <div className="mt-6 flex gap-3">
                 <button
                   onClick={exportToCsv}
+                  type="button"
                   className="btn-primary flex-1"
                 >
                   Download CSV
                 </button>
                 <button
                   onClick={() => setShowExportModal(false)}
+                  type="button"
                   className="btn-secondary flex-1"
                 >
                   Cancel
@@ -351,46 +357,56 @@ export default function TransactionsTable() {
       <div className="mb-6 space-y-3">
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div className="relative w-full">
-            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+            <Search className="absolute left-3 top-3 w-5 h-5 text-gray-400" aria-hidden="true" focusable="false" />
             <input
               type="text"
               placeholder="Search transactions..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="input-field h-12 pl-10"
+              aria-label="Search transactions"
             />
           </div>
 
           <div className="grid w-full grid-cols-5 items-center gap-3 lg:flex lg:w-auto lg:justify-end">
             <button
               onClick={() => setShowFilters((prev) => !prev)}
+              type="button"
               className="btn-secondary col-span-2 flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap px-3 lg:w-auto lg:px-4"
+              aria-expanded={showFilters}
+              aria-controls="transaction-filters"
             >
-              <Filter className="w-4 h-4" />
+              <Filter className="w-4 h-4" aria-hidden="true" focusable="false" />
               {showFilters ? 'Hide Filters' : 'Filters'}
             </button>
 
             <div className="col-span-3 inline-flex h-12 w-full rounded-lg border border-gray-300 p-1 dark:border-gray-600 lg:w-auto">
               <button
                 onClick={() => setViewMode('table')}
+                type="button"
                 className={`flex flex-1 items-center justify-center gap-2 rounded-md px-2 py-2 text-sm font-medium transition sm:px-4 ${
                   viewMode === 'table'
                     ? 'bg-blue-600 text-white'
                     : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
                 }`}
+                aria-pressed={viewMode === 'table'}
+                aria-label="Show table view"
               >
-                <List className="h-4 w-4" />
+                <List className="h-4 w-4" aria-hidden="true" focusable="false" />
                 Table
               </button>
               <button
                 onClick={() => setViewMode('cards')}
+                type="button"
                 className={`flex flex-1 items-center justify-center gap-2 rounded-md px-2 py-2 text-sm font-medium transition sm:px-4 ${
                   viewMode === 'cards'
                     ? 'bg-blue-600 text-white'
                     : 'text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700'
                 }`}
+                aria-pressed={viewMode === 'cards'}
+                aria-label="Show cards view"
               >
-                <LayoutGrid className="h-4 w-4" />
+                <LayoutGrid className="h-4 w-4" aria-hidden="true" focusable="false" />
                 Cards
               </button>
             </div>
@@ -400,7 +416,7 @@ export default function TransactionsTable() {
         
 
         {showFilters && (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div id="transaction-filters" className="grid grid-cols-1 gap-4 md:grid-cols-3">
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
@@ -529,20 +545,24 @@ export default function TransactionsTable() {
                                   e.stopPropagation();
                                   handleEdit(transaction);
                                 }}
+                                type="button"
                                 className="p-2 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-lg transition-colors"
                                 title="Edit transaction"
+                                aria-label={`Edit transaction ${transaction.description}`}
                               >
-                                <Edit2 className="w-4 h-4" />
+                                <Edit2 className="w-4 h-4" aria-hidden="true" focusable="false" />
                               </button>
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   deleteTransaction(transaction.id);
                                 }}
+                                type="button"
                                 className="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900 rounded-lg transition-colors"
                                 title="Delete transaction"
+                                aria-label={`Delete transaction ${transaction.description}`}
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="w-4 h-4" aria-hidden="true" focusable="false" />
                               </button>
                             </div>
                           </td>
@@ -608,20 +628,23 @@ export default function TransactionsTable() {
                       </p>
                       <button
                         onClick={() => toggleExpandedTransaction(transaction.id)}
+                        type="button"
                         className="mt-2 inline-flex items-center gap-1 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                        aria-expanded={isExpanded}
+                        aria-controls={`transaction-details-${transaction.id}`}
                       >
                         {isExpanded ? 'Hide details' : 'Show details'}
                         {isExpanded ? (
-                          <ChevronUp className="h-3.5 w-3.5" />
+                          <ChevronUp className="h-3.5 w-3.5" aria-hidden="true" focusable="false" />
                         ) : (
-                          <ChevronDown className="h-3.5 w-3.5" />
+                          <ChevronDown className="h-3.5 w-3.5" aria-hidden="true" focusable="false" />
                         )}
                       </button>
                     </div>
                   </div>
 
                   {isExpanded && (
-                    <div className="mt-3 rounded-lg bg-gray-100 p-3 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                    <div id={`transaction-details-${transaction.id}`} className="mt-3 rounded-lg bg-gray-100 p-3 text-sm text-gray-700 dark:bg-gray-800 dark:text-gray-300">
                       <p>
                         <span className="font-semibold">Transaction ID:</span> {transaction.id}
                       </p>
@@ -637,12 +660,14 @@ export default function TransactionsTable() {
                     <div className="mt-4 flex gap-2">
                       <button
                         onClick={() => handleEdit(transaction)}
+                        type="button"
                         className="flex-1 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100 dark:border-blue-800 dark:bg-blue-900/40 dark:text-blue-300"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => deleteTransaction(transaction.id)}
+                        type="button"
                         className="flex-1 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm font-medium text-red-700 transition hover:bg-red-100 dark:border-red-800 dark:bg-red-900/40 dark:text-red-300"
                       >
                         Delete
@@ -674,8 +699,10 @@ export default function TransactionsTable() {
         <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            type="button"
             disabled={currentPage === 1}
             className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+            aria-label="Go to previous page"
           >
             Previous
           </button>
@@ -684,11 +711,14 @@ export default function TransactionsTable() {
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
+              type="button"
               className={`rounded-md px-3 py-1.5 text-sm font-medium transition ${
                 currentPage === page
                   ? 'bg-blue-600 text-white'
                   : 'border border-gray-300 text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700'
               }`}
+              aria-label={`Go to page ${page}`}
+              aria-current={currentPage === page ? 'page' : undefined}
             >
               {page}
             </button>
@@ -698,8 +728,10 @@ export default function TransactionsTable() {
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
+            type="button"
             disabled={currentPage === totalPages}
             className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-medium text-gray-700 transition hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700"
+            aria-label="Go to next page"
           >
             Next
           </button>

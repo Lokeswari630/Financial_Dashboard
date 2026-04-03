@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { FinanceProvider } from './context/FinanceContext';
 import AppShell from './layout/AppShell';
-import OverviewPage from './pages/OverviewPage';
-import TransactionsPage from './pages/TransactionsPage';
-import InsightsPage from './pages/InsightsPage';
+
+const OverviewPage = React.lazy(() => import('./pages/OverviewPage'));
+const TransactionsPage = React.lazy(() => import('./pages/TransactionsPage'));
+const InsightsPage = React.lazy(() => import('./pages/InsightsPage'));
 
 function App() {
   React.useEffect(() => {
@@ -18,14 +19,16 @@ function App() {
   return (
     <FinanceProvider>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<AppShell />}>
-            <Route index element={<Navigate to="/overview" replace />} />
-            <Route path="overview" element={<OverviewPage />} />
-            <Route path="transactions" element={<TransactionsPage />} />
-            <Route path="insights" element={<InsightsPage />} />
-          </Route>
-        </Routes>
+        <React.Suspense fallback={<div className="sr-only">Loading page...</div>}>
+          <Routes>
+            <Route path="/" element={<AppShell />}>
+              <Route index element={<Navigate to="/overview" replace />} />
+              <Route path="overview" element={<OverviewPage />} />
+              <Route path="transactions" element={<TransactionsPage />} />
+              <Route path="insights" element={<InsightsPage />} />
+            </Route>
+          </Routes>
+        </React.Suspense>
       </BrowserRouter>
     </FinanceProvider>
   );

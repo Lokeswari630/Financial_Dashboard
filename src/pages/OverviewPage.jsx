@@ -18,7 +18,7 @@ export default function OverviewPage() {
   }).format(new Date());
 
   return (
-    <div className="space-y-8">
+    <section className="space-y-8" aria-labelledby="overview-welcome-heading">
       <section className="relative overflow-hidden rounded-2xl border border-blue-200/70 bg-gradient-to-r from-cyan-50 via-blue-50 to-indigo-100 px-5 py-5 shadow-sm dark:border-slate-700/70 dark:from-slate-950 dark:via-slate-900 dark:to-slate-900/80">
         <div className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-blue-400/20 blur-2xl dark:bg-cyan-400/12" />
         <div className="pointer-events-none absolute -bottom-12 left-1/3 h-28 w-28 rounded-full bg-indigo-400/20 blur-2xl dark:bg-indigo-400/12" />
@@ -27,7 +27,7 @@ export default function OverviewPage() {
         <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             
-            <h2 className="text-2xl font-extrabold tracking-tight text-blue-700 dark:text-sky-300 sm:text-[30px]">
+            <h2 id="overview-welcome-heading" className="text-2xl font-extrabold tracking-tight text-blue-700 dark:text-sky-300 sm:text-[30px]">
               {greeting}, {role === 'admin' ? 'Admin' : 'Viewer'}
             </h2>
             <p className="mt-1.5 text-sm text-slate-600 dark:text-slate-400 sm:text-base">
@@ -43,6 +43,6 @@ export default function OverviewPage() {
 
       <DashboardOverview />
       <ChartsSection />
-    </div>
+    </section>
   );
 }

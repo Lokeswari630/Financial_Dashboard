@@ -6,7 +6,6 @@ import { Moon, Sun } from 'lucide-react';
 export default function Header({
   title = 'Dashboard Overview',
   subtitle = 'Your financial summary at a glance',
-  sidebarOpen = true,
 }) {
   const { role, setRole, isDarkMode, toggleDarkMode } = useFinance();
 
@@ -18,10 +17,10 @@ export default function Header({
             {/* Logo and Title */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
               <div className="p-1 sm:p-1.5 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg">
-                <TrendingUp className="h-5 w-5 sm:h-5 sm:w-5 text-white" />
+                <TrendingUp className="h-5 w-5 sm:h-5 sm:w-5 text-white" aria-hidden="true" focusable="false" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-base font-semibold leading-tight truncate bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent sm:text-2xl dark:from-violet-300 dark:to-fuchsia-300">
+                <h1 id="page-title" className="text-base font-semibold leading-tight truncate bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent sm:text-2xl dark:from-violet-300 dark:to-fuchsia-300">
                   {title}
                 </h1>
                 <p className="text-xs leading-tight text-gray-500 truncate sm:text-sm dark:text-gray-400">
@@ -34,13 +33,15 @@ export default function Header({
             <div className="flex items-center gap-1 sm:gap-4 flex-shrink-0">
               {/* Role Selector - Hidden on very small screens */}
               <div className="hidden sm:flex items-center gap-2">
-                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                <label htmlFor="role-select" className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                   Role:
                 </label>
                 <select
+                  id="role-select"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   className="input-field w-[100px] sm:w-auto py-2 text-sm cursor-pointer"
+                  aria-label="Select role"
                 >
                   <option value="viewer">👁️ Viewer</option>
                   <option value="admin">⚙️ Admin</option>
@@ -54,9 +55,9 @@ export default function Header({
                 aria-label="Toggle dark mode"
               >
                 {isDarkMode ? (
-                  <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" />
+                  <Sun className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-500" aria-hidden="true" focusable="false" />
                 ) : (
-                  <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
+                  <Moon className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" aria-hidden="true" focusable="false" />
                 )}
               </button>
             </div>

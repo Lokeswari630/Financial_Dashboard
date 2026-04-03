@@ -1,203 +1,92 @@
 # Finance Dashboard
 
-A modern, responsive Finance Dashboard web application built with React and Tailwind CSS. Manage your income, expenses, and get AI-powered financial insights.
+A responsive finance dashboard built with React, Vite, Tailwind CSS, and Recharts.
 
-## Features
+It helps track transactions, visualize monthly trends, and view insights with light/dark theme support.
 
-### 1. **Dashboard Overview**
-- Display of Total Balance, Income, and Expenses
-- Real-time trend indicators (increase/decrease)
-- Beautiful stat cards with icons and visual hierarchy
+## Highlights
 
-### 2. **Charts & Visualization**
-- **Line Chart**: Time-based income vs expenses trend (last 6 months)
-- **Pie Chart**: Category-based expense distribution
-- Interactive tooltips and legends
+- Dashboard overview cards for balance, income, expenses, and savings rate
+- Monthly cash flow line chart
+- Spend analysis doughnut chart with category breakdown
+- Insights page with KPI cards and monthly comparison chart
+- Spending by category chart with month selector
+- Transactions table with search, filters, sorting, and pagination
+- CSV export by date range
+- Role-based UI behavior (viewer/admin)
+- Persistent data and preferences using localStorage
 
-### 3. **Transactions Management**
-- Complete transaction table with Date, Amount, Category, and Type
-- **Search functionality**: Find transactions by description or amount
-- **Advanced filtering**: Filter by type (income/expense) and category
-- **Smart sorting**: Sort by date, amount (ascending/descending)
-- **Visual highlights**: Large expenses (>$500) are highlighted in red
-- **Color coding**: Income (green) and Expenses (red)
+## Tech Stack
 
-### 4. **Role-Based Access Control**
-- **Viewer Mode**: Read-only access to dashboard and reports
-- **Admin Mode**: Full control with ability to:
-  - Add new transactions
-  - Edit existing transactions
-  - Delete transactions
+- React 18
+- React Router DOM 6
+- Tailwind CSS 3
+- Recharts 2
+- Lucide React + React Icons
+- Vite 5
 
-### 5. **Smart Insights**
-- AI-powered financial analysis
-- Savings rate calculations
-- Highest spending category identification
-- Spending trend comparisons
-- Income opportunity suggestions
-- Quick financial tips
+## Getting Started
 
-### 6. **Dark Mode**
-- Smooth toggle between light and dark themes
-- Theme preference is persisted in local storage
-- Respects system preferences on first load
+1. Install dependencies
 
-### 7. **Data Persistence**
-- All transactions and preferences are saved in local storage
-- Data persists across browser sessions
-- Automatic sync between tabs/windows
+```bash
+npm install
+```
 
-### 8. **UI/UX Enhancements**
-- Smooth animations and transitions
-- Hover effects on interactive elements
-- Responsive grid layout (mobile, tablet, desktop)
-- Graceful empty states
-- Loading indicators
-- Interactive form validations
+2. Run development server
 
-## Installation
+```bash
+npm run dev
+```
 
-1. **Clone or navigate to the project:**
-   ```bash
-   cd finance-dashboard
-   ```
+3. Open app
 
-2. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+```text
+http://localhost:5173
+```
 
-3. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
+## Scripts
 
-4. **Open your browser and navigate to:**
-   ```
-   http://localhost:5173
-   ```
+- `npm run dev` - start local dev server
+- `npm run build` - create production build in `dist`
+- `npm run preview` - preview production build locally
 
 ## Project Structure
 
-```
+```text
 src/
-├── components/
-│   ├── Header.jsx              # Navigation and role selector
-│   ├── DashboardOverview.jsx   # Summary cards
-│   ├── ChartsSection.jsx       # Line and pie charts
-│   ├── InsightsSection.jsx     # Financial insights
-│   ├── TransactionsTable.jsx   # Transaction list with filters
-│   └── TransactionForm.jsx     # Add/edit form
-├── context/
-│   └── FinanceContext.jsx      # Global state management
-├── App.jsx                      # Main app component
-├── main.jsx                     # Entry point
-└── index.css                    # Global styles with Tailwind
+   components/
+      ChartsSection.jsx
+      DashboardOverview.jsx
+      Header.jsx
+      InsightsSection.jsx
+      TransactionForm.jsx
+      TransactionsTable.jsx
+   context/
+      FinanceContext.jsx
+   layout/
+      AppShell.jsx
+   pages/
+      OverviewPage.jsx
+      TransactionsPage.jsx
+      InsightsPage.jsx
+   App.jsx
+   main.jsx
+   index.css
 ```
 
-## Technology Stack
+## Deployment Notes
 
-- **Frontend Framework**: React 18.2
-- **Styling**: Tailwind CSS 3.3
-- **Charts**: Recharts 2.10
-- **Icons**: Lucide React & React Icons
-- **Build Tool**: Vite 5.0
-- **State Management**: React Context API
+This project is configured for Vercel SPA routing using `vercel.json`.
 
-## Usage
+If direct-refresh on nested routes (for example `/insights`) returns 404, ensure `vercel.json` is present in the repo root with an index rewrite.
 
-### Adding a Transaction (Admin Mode)
+## Current Behavior Notes
 
-1. Switch to **Admin** role in the header
-2. Click the **"Add Transaction"** button
-3. Fill in the form:
-   - Select date
-   - Enter amount
-   - Choose type (Income/Expense)
-   - Select category
-   - Enter description
-4. Click **"Add Transaction"**
-
-### Filtering Transactions
-
-- Use the search box to find by description or amount
-- Choose transaction type from the dropdown
-- Select a specific category
-- Sort by date or amount
-
-### Viewing Insights
-
-- Check the **Smart Insights** panel on the right
-- View AI-powered recommendations
-- Track your savings rate
-- Identify spending patterns
-
-### Switching Themes
-
-- Click the sun/moon icon in the header to toggle dark mode
-- Your preference will be remembered
-
-## Sample Data
-
-The dashboard comes with pre-loaded sample transactions including:
-- Monthly salary
-- Various expense categories (food, transport, utilities, etc.)
-- Freelance income
-- Entertainment and shopping expenses
-
-This allows you to explore all features immediately without manual data entry.
-
-## Features Breakdown
-
-### Responsive Design
-- Desktop: Full layout with side-by-side charts
-- Tablet: Optimized grid layout
-- Mobile: Single column layout with touch-friendly controls
-
-### Performance
-- Optimized renders with React hooks
-- Efficient filtering and sorting algorithms
-- Memoized calculations to prevent unnecessary re-renders
-
-### Accessibility
-- Semantic HTML structure
-- Proper ARIA labels
-- Keyboard navigation support
-- Color contrast compliance
-
-## Building for Production
-
-```bash
-npm run build
-```
-
-The optimized build will be created in the `dist` folder.
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Future Enhancements
-
-- Budget goals and alerts
-- Recurring transactions
-- Bank account synchronization
-- PDF export functionality
-- Mobile app version
-- Multi-user support
-- Advanced analytics dashboard
+- Transaction and theme state persist in localStorage.
+- Dark mode is supported throughout the app.
+- Category colors are deterministic across charts.
 
 ## License
 
-MIT License
-
-## Contributing
-
-Contributions are welcome! Feel free to submit issues or pull requests.
-
-## Author
-
-Created with ❤️ for better financial management.
+MIT
